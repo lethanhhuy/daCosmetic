@@ -166,5 +166,3 @@ export const Tabs = TabNavigator({
         inactiveTintColor: '#000000',
     },
 });
-
-

@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {
     View,
     StyleSheet,
-    Text,TouchableOpacity
+    Text,TouchableOpacity,
+    Image
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,9 +14,14 @@ export default class Account extends Component {
         const {wrapper, TopAcc, BottAcc, flexColumn, txtStyles, infoContainer} = styles;
         return (
             < View style={wrapper}>
-                <View style={TopAcc}>
 
+                <View style={TopAcc}>
+                  <Image style={{width:100, height:100}}
+                     source={require('daCosmetic/src/Image/guest.png')}
+                   />
+                     <Text style={styles.text_acc}>Chế độ khách</Text>
                 </View>
+
                 <View style={BottAcc}>
                         <TouchableOpacity >
                             <View style={flexColumn} >
@@ -62,7 +68,9 @@ const styles = StyleSheet.create({
 
     },
     TopAcc:{
-        flex:4
+        flex:4,
+        marginTop:20,
+        alignItems:'center'
     },
     flexColumn:{
         flexDirection:'row',
@@ -76,4 +84,10 @@ const styles = StyleSheet.create({
         color:'#eb4d67',
 
     },
+    text_acc:{
+      fontSize:17,
+      color:'#eb4d67',
+      fontWeight: 'bold',
+      fontFamily: 'Avenir'
+    }
 });
