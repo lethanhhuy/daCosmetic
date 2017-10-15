@@ -1,5 +1,5 @@
 import * as firebase from 'firebase';
-var config = {
+const config = {
     apiKey: "AIzaSyAiOZLPRwnefmLKiTgwvsqjg-M9iRY1jPg",
     authDomain: "dacosmetic-bda4e.firebaseapp.com",
     databaseURL: "https://dacosmetic-bda4e.firebaseio.com",
@@ -8,3 +8,5 @@ var config = {
     messagingSenderId: "414120063928"
 };
 firebase.initializeApp(config);
+
+export default firebase;

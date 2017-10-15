@@ -1,6 +1,6 @@
 import React from 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import { TextInput, TouchableOpacity, StatusBar } from 'react-native';
+import { TextInput, TouchableOpacity, } from 'react-native';
 //Use Icon//
 import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';

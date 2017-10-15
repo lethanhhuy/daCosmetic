@@ -13,7 +13,7 @@ export default class Main extends Component {
             this.setState({
                 visiblesplash: true
             })
-        },100)
+        },1000)
     }
     render(){
         if(this.state.visiblesplash === false) {

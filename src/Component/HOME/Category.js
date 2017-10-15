@@ -27,6 +27,7 @@ export default class Category extends Component {
             },100 );
         }
     render() {
+            const {bst, bannertext} = styles;
             let swiper = null;
             if(this.state.visibleSwiper) {
                 swiper =
@@ -51,9 +52,9 @@ export default class Category extends Component {
                 swiper = <View></View>
             }
         return (
-            <View style={styles.bst} >
+            <View style={bst} >
                 <View style={{ flex: 1 }}>
-                    <Text style={styles.bannertext}>DANH MỤC NHÃN HÀNG </Text>
+                    <Text style={bannertext}>DANH MỤC NHÃN HÀNG </Text>
                 </View>
                 <View style={{ flex: 6 }} >
                     {swiper}
