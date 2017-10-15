@@ -1,12 +1,22 @@
 import React, {Component} from 'react';
+
 import {
-    View,
+    StatusBar,
+    ScrollView,
 } from 'react-native';
+import Category from './Category.js';
+
 export default class Home extends Component {
+
+    componentDidMount() {
+        StatusBar.setHidden(true);
+    }
+
     render(){
         return (
-            <View>
-            </View>
+            <ScrollView style={{ flex: 1, backgroundColor: 'rgb(221, 221, 221)' }} >
+                <Category navigation={this.props.navigation} />
+            </ScrollView>
         );
     }
 }
