@@ -6,7 +6,7 @@ import {
     StyleSheet
 } from 'react-native';
 
-import CartView from 'daCosmetic/src/Component/CART/CartView';
+import CartView from './CartView';
 
 
 export default class Cart extends Component {
@@ -15,8 +15,8 @@ export default class Cart extends Component {
         const {TotalTitle, TotalButton, wrapper } = styles;
         return (
             <View style={wrapper}>
-            <CartView/>
                 <View style={{ flex:9}}>
+                    <CartView/>
                 </View>
                 <View style={{ flex:1}}>
                     <TouchableOpacity>

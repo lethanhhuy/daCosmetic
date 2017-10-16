@@ -14,6 +14,8 @@ import Search from './SEARCH/Search';
 import Cart from './CART/Cart';
 import List from './LIST/List';
 import LogIn from './ACCOUNT/LOGIN/LogIn';
+import Detail from './DETAIL/Detail';
+//import Product from './PRODUCT/Product';
 
 export const HomeStack = StackNavigator({
    Screen_Home: {
@@ -33,7 +35,22 @@ export const HomeStack = StackNavigator({
     MyList:{
        screen: List,
         navigationOptions: {
-            title:  'ESTEE LAUDER',
+            //title:  '',
+            headerTintColor: 'white',
+            headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
+            headerStyle: {backgroundColor:'#FF3364', paddingRight:10},
+        }
+    },
+    MyDetail:{
+        screen: Detail,
+        navigationOptions: {
+            title:  '',
+            headerRight: (
+                <TouchableOpacity>
+                    <MaterialCommunityIcons name="cart" size={28} color="#FBFFF5"
+                    />
+                </TouchableOpacity>
+            ),
             headerTintColor: 'white',
             headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
             headerStyle: {backgroundColor:'#FF3364', paddingRight:10},

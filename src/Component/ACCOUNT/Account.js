@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 
     },
     TopAcc:{
-        flex:4,
+        flex:3.5,
         marginTop:20,
         alignItems:'center'
     },

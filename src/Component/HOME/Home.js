@@ -15,9 +15,9 @@ export default class Home extends Component {
 
     render(){
         return (
-                <ScrollView style={{ flex: 1, backgroundColor: 'rgb(221, 221, 221)' }} >
+                <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, backgroundColor: 'rgb(221, 221, 221)' }} >
                     <Category navigation={this.props.navigation} />
-                    <HomeView/>
+                    <HomeView navigation={this.props.navigation} />
                 </ScrollView>
 
         );

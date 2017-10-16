@@ -8,13 +8,16 @@ import {
     StyleSheet,
     ListView,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
+
 const { width, height } = Dimensions.get('window');
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-var database,user ;
-export default class HomeView extends Component{
+
+var database;
+
+export default class List extends Component {
     constructor(props){
         super(props);
         _items=[];
@@ -24,13 +27,16 @@ export default class HomeView extends Component{
         };
         database = firebase.database();
     }
-    gotoDetail(makey, name, image, price, description, info){
+    static navigationOptions = {
+        title:'Nhan Hang',
+    }
+    gotoDetail(name, image, price, description, info, makey){
         this.props.navigation.navigate('MyDetail',
-            {props:{makey:makey, name: name, image: image,  price: price, description: description, info: info}}
-            )
+            {props:{name: name, image: image,  price: price, description: description, info: info, makey: makey}}
+        )
     }
     componentWillMount(){
-        database.ref('TopProduct').on('value',(snap)=>{
+        database.ref('Brand/'+this.props.navigation.state.params.props.makey+'/Products').on('value',(snap)=>{
             _items=[];
             snap.forEach((data)=>{
                 _items.push({
@@ -47,8 +53,8 @@ export default class HomeView extends Component{
     }
     renderRow(data) {
         return(
-            <TouchableOpacity onPress={() => this.gotoDetail(data.makey, data.name, data.image, data.price, data.description, data.info)}>
-                <View>
+            <TouchableOpacity onPress={() => this.gotoDetail(data.name, data.image, data.price, data.description, data.info)}>
+                <View >
                     <Image source={{uri: data.image}} style={styles.banner}/>
                     <Text style={styles.productname} >{data.name}</Text>
                     <Text style={styles.productgia}>{data.price}đ</Text>
@@ -57,26 +63,21 @@ export default class HomeView extends Component{
         )
     }
     render(){
-        const {bst, body, bannertext, } = styles;
-        console.ignoredYellowBox = ['Setting a timer'];
-        return(
+        const {bst, body} = styles;
+        return (
             <View style={bst}>
-                <View>
-                    <Text style={bannertext}>
-                        SẢN PHẨM BÁN CHẠY
-                    </Text>
-                </View>
                 <ListView
+                    removeClippedSubviews={false}
                     contentContainerStyle={body}
                     enableEmptySections
                     showsVerticalScrollIndicator={false}
-                        dataSource={this.state.dataSource}
-                        renderRow={this.renderRow.bind(this)}
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow.bind(this)}
                     renderSeparator={(sectionId, rowId) => {
                         if (rowId % 2 === 1) return <View style={{ width, height: 10 }} key={`${sectionId}-${rowId}`} />;
                         return null;
                     }}
-                        />
+                />
             </View>
         );
     }
@@ -104,9 +105,14 @@ const styles = StyleSheet.create({
     body: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        paddingBottom: 15,
+        padding: 10,
+        borderTopColor: '#f0f0f0',
+        borderBottomColor: '#fff',
+        borderLeftColor: '#fff',
+        borderRightColor: '#fff',
+        borderWidth: 1,
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent:'center'
     },
     bannertext: {
         fontSize: 15,

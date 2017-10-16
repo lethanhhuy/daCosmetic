@@ -1,13 +1,23 @@
 import React, {Component} from 'react';
-import {
-    View,
-} from 'react-native';
 
-export default class List extends Component {
+import {
+    StatusBar,
+    ScrollView,
+    View
+} from 'react-native';
+import ListView from './ListView';
+export default class Home extends Component {
+
+    componentDidMount() {
+        StatusBar.setHidden(true);
+    }
+
     render(){
         return (
-            <View>
-            </View>
+            <ScrollView style={{ flex: 1, backgroundColor: 'rgb(221, 221, 221)' }} >
+                <ListView navigation={this.props.navigation} />
+            </ScrollView>
+
         );
     }
 }
