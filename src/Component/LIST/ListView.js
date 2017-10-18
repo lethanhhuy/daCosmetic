@@ -11,6 +11,8 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const { width, height } = Dimensions.get('window');
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -23,20 +25,18 @@ export default class List extends Component {
         _items=[];
         this.state = {
             dataSource: new ListView.DataSource({rowHasChanged:(row1, row2) => row1 !== row2}),
-            visible: true
+            visible: true,
         };
         database = firebase.database();
     }
-    static navigationOptions = {
-        title:'Nhan Hang',
-    }
-    gotoDetail(name, image, price, description, info, makey){
+
+    gotoDetail(name, image,image2, image3, price, description, info, makey, brandname){
         this.props.navigation.navigate('MyDetail',
-            {props:{name: name, image: image,  price: price, description: description, info: info, makey: makey}}
+            {props:{name: name, image: image, image2:image2, image3:image3,  price: price, description: description, info: info, makey: makey, brandname:brandname}}
         )
     }
     componentWillMount(){
-        database.ref('Brand/'+this.props.navigation.state.params.props.makey+'/Products').on('value',(snap)=>{
+        database.ref('Brand/'+this.props.navigation.state.params.props.brandname+'/Products').on('value',(snap)=>{
             _items=[];
             snap.forEach((data)=>{
                 _items.push({
@@ -44,6 +44,8 @@ export default class List extends Component {
                     name:data.val().Name,
                     price:data.val().Price,
                     image:data.val().Image,
+                    image2:data.val().Image2,
+                    image3:data.val().Image3,
                     description: data.val().Description,
                     info: data.val().Info
                 });
@@ -53,19 +55,29 @@ export default class List extends Component {
     }
     renderRow(data) {
         return(
-            <TouchableOpacity onPress={() => this.gotoDetail(data.name, data.image, data.price, data.description, data.info)}>
-                <View >
-                    <Image source={{uri: data.image}} style={styles.banner}/>
-                    <Text style={styles.productname} >{data.name}</Text>
-                    <Text style={styles.productgia}>{data.price}đ</Text>
-                </View>
-            </TouchableOpacity>
+            <View>
+
+                <TouchableOpacity onPress={() => this.gotoDetail(data.name, data.image,data.image2, data.image3, data.price, data.description, data.info, data.makey, this.props.navigation.state.params.props.brandname)}>
+                    <View >
+                        <Image source={{uri: data.image}} style={styles.banner}/>
+                        <Text style={styles.productname} >{data.name}</Text>
+                        <Text style={styles.productgia}>{data.price}đ</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+
         )
     }
     render(){
-        const {bst, body} = styles;
+        const {bst, body, brandName} = styles;
         return (
             <View style={bst}>
+                <View style={{flexDirection:'row'}}>
+                    <Text style={brandName}>{this.props.navigation.state.params.props.brandname}</Text>
+                    <TouchableOpacity>
+                        <Ionicons name='ios-information-circle-outline' size={18} color='#2c3e50' style={{padding:10}}/>
+                    </TouchableOpacity>
+                </View>
                 <ListView
                     removeClippedSubviews={false}
                     contentContainerStyle={body}
@@ -97,8 +109,8 @@ const styles = StyleSheet.create({
 
     },
     banner: {
-        width: DEVICE_WIDTH / 2.5,
-        height: DEVICE_WIDTH / 2.5,
+        width: DEVICE_WIDTH / 3,
+        height: DEVICE_WIDTH / 3,
         alignItems:'center',
         justifyContent:'center'
     },
@@ -133,4 +145,8 @@ const styles = StyleSheet.create({
         color: '#ff0000',
         fontSize: 13,
     },
+    brandName: {
+        fontSize: 24,
+        color:'#2c3e50',
+    }
 });

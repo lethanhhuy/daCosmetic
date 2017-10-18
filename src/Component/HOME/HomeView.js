@@ -24,9 +24,9 @@ export default class HomeView extends Component{
         };
         database = firebase.database();
     }
-    gotoDetail(makey, name, image, price, description, info){
+    gotoDetail(makey, name, image, image2, image3, price, description, info){
         this.props.navigation.navigate('MyDetail',
-            {props:{makey:makey, name: name, image: image,  price: price, description: description, info: info}}
+            {props:{makey:makey, name: name, image: image, image2:image2, image3:image3,  price: price, description: description, info: info}}
             )
     }
     componentWillMount(){
@@ -38,6 +38,8 @@ export default class HomeView extends Component{
                     name:data.val().Name,
                     price:data.val().Price,
                     image:data.val().Image,
+                    image2:data.val().Image2,
+                    image3:data.val().Image3,
                     description: data.val().Description,
                     info: data.val().Info
                 });
@@ -47,7 +49,7 @@ export default class HomeView extends Component{
     }
     renderRow(data) {
         return(
-            <TouchableOpacity onPress={() => this.gotoDetail(data.makey, data.name, data.image, data.price, data.description, data.info)}>
+            <TouchableOpacity onPress={() => this.gotoDetail(data.makey, data.name, data.image, data.image2, data.image3, data.price, data.description, data.info)}>
                 <View>
                     <Image source={{uri: data.image}} style={styles.banner}/>
                     <Text style={styles.productname} >{data.name}</Text>
@@ -96,8 +98,8 @@ const styles = StyleSheet.create({
 
     },
     banner: {
-        width: DEVICE_WIDTH / 2.5,
-        height: DEVICE_WIDTH / 2.5,
+        width: DEVICE_WIDTH / 3,
+        height: DEVICE_WIDTH / 3,
         alignItems:'center',
         justifyContent:'center'
     },

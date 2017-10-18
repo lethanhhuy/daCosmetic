@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import ListView from './ListView';
 export default class Home extends Component {
-
     componentDidMount() {
         StatusBar.setHidden(true);
     }

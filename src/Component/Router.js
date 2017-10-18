@@ -35,7 +35,7 @@ export const HomeStack = StackNavigator({
     MyList:{
        screen: List,
         navigationOptions: {
-            //title:  '',
+            title:'Nhãn hàng',
             headerTintColor: 'white',
             headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
             headerStyle: {backgroundColor:'#FF3364', paddingRight:10},
@@ -44,7 +44,7 @@ export const HomeStack = StackNavigator({
     MyDetail:{
         screen: Detail,
         navigationOptions: {
-            title:  '',
+            title:  'Thông tin sản phẩm',
             headerRight: (
                 <TouchableOpacity>
                     <MaterialCommunityIcons name="cart" size={28} color="#FBFFF5"

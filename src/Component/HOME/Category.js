@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Swiper from 'react-native-swiper';
 import Firebase from 'daCosmetic/src/API/Firebase';
 import * as firebase from 'firebase';
+//import Carousel from 'react-native-snap-carousel';
 import {
     StyleSheet,
     View,
@@ -29,9 +30,9 @@ export default class Category extends Component {
             }
             database = firebase.database();
         }
-        gotoList(makey){
+        gotoList(brandname){
             this.props.navigation.navigate('MyList',
-                {props:{makey: makey}}
+                {props:{brandname: brandname}}
             )
         }
 
@@ -47,7 +48,7 @@ export default class Category extends Component {
                 _items=[];
                 snap.forEach((data)=>{
                     _items.push({
-                        makey: data.key,
+                        brandname: data.key,
                         imagelogo:data.val().imgLogo,
                     });
                 });
@@ -56,7 +57,7 @@ export default class Category extends Component {
         }
         renderRow(data) {
            return(
-               <TouchableOpacity onPress={() => this.gotoList(data.makey)}>
+               <TouchableOpacity onPress={() => this.gotoList(data.brandname)}>
                    <View>
                        <Image source={{uri: data.imagelogo}} style={styles.banner}/>
                    </View>
