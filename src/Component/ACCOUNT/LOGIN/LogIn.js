@@ -32,10 +32,13 @@ export default class SignOut extends Component {
     signUp() {
         this.setState({ isSigIN: false });
     }
+    gotoBack(){
+        this.props.navigation.goBack();
+    }
     render(){
         const  {wrapper, imgStyle, txtStyle,  inactiveStyle, activeStyle} = styles;
         const { isSigIN } = this.state;
-        const mainJSX = isSigIN ? <SignIn  /> : <SignUp gotoSignIn={this.gotoSignIn.bind(this)} />;
+        const mainJSX = isSigIN ? <SignIn gotoBack={this.gotoBack.bind(this)}/> : <SignUp gotoSignIn={this.gotoSignIn.bind(this)} />;
         return (
             <View style={wrapper}>
                 <Image source={LogoStore} style={imgStyle}/>

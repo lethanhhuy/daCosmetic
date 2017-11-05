@@ -45,12 +45,12 @@ export const HomeStack = StackNavigator({
         screen: Detail,
         navigationOptions: {
             title:  'Thông tin sản phẩm',
-            headerRight: (
+            /*headerRight: (
                 <TouchableOpacity>
                     <MaterialCommunityIcons name="cart" size={28} color="#FBFFF5"
                     />
                 </TouchableOpacity>
-            ),
+            ),*/
             headerTintColor: 'white',
             headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
             headerStyle: {backgroundColor:'#FF3364', paddingRight:10},

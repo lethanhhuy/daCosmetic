@@ -12,7 +12,7 @@ import {
     ScrollView
 } from 'react-native';
 var database;
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default  class Detail extends Component {
     constructor(props){
@@ -42,14 +42,23 @@ export default  class Detail extends Component {
             this.setState({dataSource:this.state.dataSource.cloneWithRows(_items)});
         })
     }
-
+    addtoCart(makey, name, image, image2, image3, price, description, info){
+        this.props.navigation.navigate('MyDetail',
+            {props:{makey:makey, name: name, image: image, image2:image2, image3:image3,  price: price, description: description, info: info}}
+        )
+    }
     render(){
         const {wrapper, imageContainer, cardStyle, productImageStyle, footer
         , textMain, textBlack, textHighlight, textSmoke, titleContainer, descContainer, descStyle,
         txtMaterial} = styles;
         return(
             <View style={wrapper}>
-                <View style={cardStyle}>
+                <ScrollView style={cardStyle}>
+                    <View style={{flexDirection:'row',justifyContent:'flex-end',margin:10 }}>
+                        <TouchableOpacity onPress={() => {this.addtoCart(data.makey, data.name, data.image, data.image2, data.image3, data.price, data.description, data.info)}} >
+                            <MaterialCommunityIcons name="cart" size={26} color='black'/>
+                        </TouchableOpacity>
+                    </View>
                     <View style={imageContainer}>
                         <ScrollView style={{ flexDirection: 'row', padding: 10, height: swiperHeight }} horizontal >
                             <Image source={{uri: this.props.navigation.state.params.props.image}} style={productImageStyle}/>
@@ -72,7 +81,7 @@ export default  class Detail extends Component {
                             </View>
                         </View>
                     </View>
-                </View>
+                </ScrollView>
             </View>
 
         );

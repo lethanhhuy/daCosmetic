@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Firebase from 'daCosmetic/src/API/Firebase';
 import {
     View,
     TextInput,
@@ -18,37 +19,52 @@ export default class SignUp extends Component {
             verifypassword: ''
         }
     }
-    onSucess() {
-        Alert.alert(
-            'Thông Báo',
-            'Đăng ký thành công: \n' + this.state.email, [
-                { text: 'OK', onPress: this.props.gotoSignIn() },
-            ],
-            { cancelable: false })
-    }
-    onFail() {
-        Alert.alert(
-            'Thông Báo',
-            'Đăng ký thất bại: \nTên tài khoản hoặc email bị trùng', [
-                { text: 'OK', onPress: () => this.removeEmail.bind(this)},
-            ],
-            { cancelable: false })
-    }
 
     removeEmail() {
         this.setState({ email: '' })
     }
     registerUser() {
-        const { name, email, password } = this.state;
+        const { email, password, verifypassword } = this.state;
+        if(password === verifypassword) {
+            Firebase.auth().createUserWithEmailAndPassword(email, password).then(() =>{
+                Alert.alert(
+                    'Thông Báo',
+                    'Đăng ký thành công: \n' + this.state.email, [
+                        { text: 'OK', onPress: this.props.gotoSignIn() },
+                    ],
+                    { cancelable: false })
+            }).catch(function(error) {
+                if(error){
+                    switch (error.code){
+                        case'auth/weak-password':
+                            Alert.alert('Thông báo','Mật khẩu của bạn quá ngắn !');
+                            break;
+                        case'auth/email-already-in-use':
+                            Alert.alert('Thông báo','Tài khoản của bạn đã được sử dụng !');
+                            break;
+                        case'auth/invalid-email':
+                            Alert.alert('Thông báo','Email tạo không đúng !');
+                            break;
+                    }
+                }
+                else{
+
+                }
+            });
+        }
+        else (
+            Alert.alert(
+                'Thông Báo',
+                'Xác nhận mật khẩu không đúng !', [
+                    { text: 'OK'},
+                ],
+                { cancelable: false })
+        )
+
     }
     render(){
         return (
             <View>
-                <TextInput
-                    underlineColorAndroid='rgba(0,0,0,0)' placeholder="Name"
-                    onChangeText={(value) => this.setState({ name: value })}
-                    value={this.state.name}
-                    style={styles.inputstyle} />
                 <TextInput
                     underlineColorAndroid='rgba(0,0,0,0)' placeholder="Email"
                     onChangeText={(value) => this.setState({ email: value })}
@@ -88,7 +104,7 @@ const styles = StyleSheet.create({
     },
     inputstyle: {
         height: 50,
-        color: '#fff',
+        color: '#050f2c',
         backgroundColor: 'rgba(214, 214, 215, 0.17)',
         marginBottom: 10,
         borderRadius: 10,

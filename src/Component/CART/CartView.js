@@ -11,25 +11,25 @@ export default class CartView extends Component {
   render(){
     return(
       <ScrollView>
-      <View style={{marginTop:10}}></View>
-      <View>
+          <View style={{marginTop:10}}></View>
+          <View>
 
-      <View style={styles.cart_view}>
-        <Image style={styles.cart_image}
-            source={{uri: 'data:image/png'}}
-         />
+          <View style={styles.cart_view}>
+            <Image style={styles.cart_image}
+                source={{uri: 'data:image/png'}}
+             />
 
-        <View>
-            <Text style={styles.cart_text}>Tên: Son Mac siêu dưỡng môi</Text>
-            <Text style={styles.cart_text}>Giá: 150.000 VNĐ</Text>
-            <Text style={styles.cart_text}>1</Text>
-        </View>
-        <Image style={styles.delete_image}
-           source={require('daCosmetic/src/Image/delete-button.png')}
-         />
-      </View>
+            <View>
+                <Text style={styles.cart_text}>Tên: Son Mac siêu thâm môi</Text>
+                <Text style={styles.cart_text}>Giá: 150.000 VNĐ</Text>
+                <Text style={styles.cart_text}>1</Text>
+            </View>
+            <Image style={styles.delete_image}
+               source={require('daCosmetic/src/Image/delete-button.png')}
+             />
+          </View>
 
-      </View>
+          </View>
       </ScrollView>
     );
   }
