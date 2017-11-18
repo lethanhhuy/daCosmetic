@@ -24,10 +24,8 @@ export default class HomeView extends Component{
         };
         database = firebase.database();
     }
-    gotoDetail(makey, name, image, image2, image3, price, description, info){
-        this.props.navigation.navigate('MyDetail',
-            {props:{makey:makey, name: name, image: image, image2:image2, image3:image3,  price: price, description: description, info: info}}
-            )
+    gotoDetail(data){
+        this.props.navigation.navigate('MyDetail', data)
     }
     componentWillMount(){
         database.ref('TopProduct').on('value',(snap)=>{
@@ -49,11 +47,11 @@ export default class HomeView extends Component{
     }
     renderRow(data) {
         return(
-            <TouchableOpacity onPress={() => this.gotoDetail(data.makey, data.name, data.image, data.image2, data.image3, data.price, data.description, data.info)}>
+            <TouchableOpacity onPress={() => this.gotoDetail(data)}>
                 <View>
                     <Image source={{uri: data.image}} style={styles.banner}/>
                     <Text style={styles.productname} >{data.name}</Text>
-                    <Text style={styles.productgia}>{data.price}đ</Text>
+                    <Text style={styles.productgia}>{data.price.text}đ</Text>
                 </View>
             </TouchableOpacity>
         )

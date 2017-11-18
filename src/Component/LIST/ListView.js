@@ -30,10 +30,8 @@ export default class List extends Component {
         database = firebase.database();
     }
 
-    gotoDetail(name, image,image2, image3, price, description, info, makey, brandname){
-        this.props.navigation.navigate('MyDetail',
-            {props:{name: name, image: image, image2:image2, image3:image3,  price: price, description: description, info: info, makey: makey, brandname:brandname}}
-        )
+    gotoDetail(data){
+        this.props.navigation.navigate('MyDetail',data)
     }
     componentWillMount(){
         database.ref('Brand/'+this.props.navigation.state.params.props.brandname+'/Products').on('value',(snap)=>{
@@ -57,11 +55,11 @@ export default class List extends Component {
         return(
             <View>
 
-                <TouchableOpacity onPress={() => this.gotoDetail(data.name, data.image,data.image2, data.image3, data.price, data.description, data.info, data.makey, this.props.navigation.state.params.props.brandname)}>
+                <TouchableOpacity onPress={() => this.gotoDetail(data,this.props.navigation.state.params.props.brandname)}>
                     <View >
                         <Image source={{uri: data.image}} style={styles.banner}/>
                         <Text style={styles.productname} >{data.name}</Text>
-                        <Text style={styles.productgia}>{data.price}đ</Text>
+                        <Text style={styles.productgia}>{data.price.text}đ</Text>
                     </View>
                 </TouchableOpacity>
             </View>

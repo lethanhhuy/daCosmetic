@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import Firebase from 'daCosmetic/src/API/Firebase';
+import saveCart from 'daCosmetic/src/API/saveCart';
+import {addToCart} from '../../REDUX/ACTION/CartAction';
+import {connect} from 'react-redux';
 import * as firebase from 'firebase';
 import {
     View,
@@ -9,43 +12,21 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    AsyncStorage
 } from 'react-native';
-var database;
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default  class Detail extends Component {
+class Detail extends Component {
     constructor(props){
         super(props);
         _items=[];
-        this.state = {
-            dataSource: new ListView.DataSource({rowHasChanged:(row1, row2) => row1 !== row2}),
-            visible: true
-        };
-        database = firebase.database();
+        product = this.props.navigation.state.params;
     }
-    componentWillMount(){
-        database.ref('Brand/'+this.props.navigation.state.params.props.brandname+'/Products/'+this.props.navigation.state.params.props.makey).on('value',(snap)=>{
-            _items=[];
-            snap.forEach((data)=>{
-                _items.push({
-                    makey: data.key,
-                    name:data.val().Name,
-                    price:data.val().Price,
-                    image:data.val().Image,
-                    image2:data.val().Image2,
-                    image3:data.val().Image3,
-                    description: data.val().Description,
-                    info: data.val().Info
-                });
-            });
-            this.setState({dataSource:this.state.dataSource.cloneWithRows(_items)});
-        })
-    }
-    addtoCart(makey, name, image, image2, image3, price, description, info){
-        this.props.navigation.navigate('MyDetail',
-            {props:{makey:makey, name: name, image: image, image2:image2, image3:image3,  price: price, description: description, info: info}}
-        )
+
+
+    AddToCart(product) {
+        this.props.addToCart(product);
     }
     render(){
         const {wrapper, imageContainer, cardStyle, productImageStyle, footer
@@ -55,29 +36,29 @@ export default  class Detail extends Component {
             <View style={wrapper}>
                 <ScrollView style={cardStyle}>
                     <View style={{flexDirection:'row',justifyContent:'flex-end',margin:10 }}>
-                        <TouchableOpacity onPress={() => {this.addtoCart(data.makey, data.name, data.image, data.image2, data.image3, data.price, data.description, data.info)}} >
+                        <TouchableOpacity onPress={() => this.AddToCart(product)} >
                             <MaterialCommunityIcons name="cart" size={26} color='black'/>
                         </TouchableOpacity>
                     </View>
                     <View style={imageContainer}>
                         <ScrollView style={{ flexDirection: 'row', padding: 10, height: swiperHeight }} horizontal >
-                            <Image source={{uri: this.props.navigation.state.params.props.image}} style={productImageStyle}/>
-                            <Image source={{uri: this.props.navigation.state.params.props.image2}} style={productImageStyle}/>
-                            <Image source={{uri: this.props.navigation.state.params.props.image3}} style={productImageStyle}/>
+                            <Image source={{uri: product.image}} style={productImageStyle}/>
+                            <Image source={{uri: product.image2}} style={productImageStyle}/>
+                            <Image source={{uri: product.image3}} style={productImageStyle}/>
                         </ScrollView>
                     </View>
                     <View style={footer}>
                         <View style={titleContainer}>
                             <Text style={textMain}>
-                                <Text style={textBlack}>{this.props.navigation.state.params.props.name.toUpperCase()}</Text>
+                                <Text style={textBlack}>{product.name}</Text>
                                 <Text style={textHighlight}> / </Text>
-                                <Text style={textSmoke}>{this.props.navigation.state.params.props.price} đ </Text>
+                                <Text style={textSmoke}>{product.price.text} đ </Text>
                             </Text>
                         </View>
                         <View style={descContainer}>
-                            <Text style={descStyle}> {this.props.navigation.state.params.props.description}</Text>
+                            <Text style={descStyle}> {product.description}</Text>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 15 }}>
-                                <Text style={txtMaterial}>{this.props.navigation.state.params.props.info}</Text>
+                                <Text style={txtMaterial}>{product.info}</Text>
                             </View>
                         </View>
                     </View>
@@ -159,3 +140,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Avenir'
     }
 });
+const mapSTP = (state) => ({
+    listCart : state.listCart
+});
+export default connect(mapSTP, { addToCart })(Detail)

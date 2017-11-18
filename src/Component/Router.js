@@ -15,8 +15,9 @@ import Cart from './CART/Cart';
 import List from './LIST/List';
 import LogIn from './ACCOUNT/LOGIN/LogIn';
 import Detail from './DETAIL/Detail';
-//import Product from './PRODUCT/Product';
-
+import Order from './CART/Order';
+import BillDetail from './ACCOUNT/BillDetail';
+import MyBillDetail from './ACCOUNT/MyBill';
 export const HomeStack = StackNavigator({
    Screen_Home: {
        screen: Home,
@@ -69,7 +70,31 @@ export const CartStack = StackNavigator({
             headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
             headerStyle: {backgroundColor:'#FF3364', paddingRight:10},
         }
-    }
+    },
+    MyDetail:{
+        screen: Detail,
+        navigationOptions: {
+            title:  'Thông tin sản phẩm',
+            /*headerRight: (
+                <TouchableOpacity>
+                    <MaterialCommunityIcons name="cart" size={28} color="#FBFFF5"
+                    />
+                </TouchableOpacity>
+            ),*/
+            headerTintColor: 'white',
+            headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
+            headerStyle: {backgroundColor:'#FF3364', paddingRight:10},
+        }
+    },
+    MyOrder: {
+        screen: Order,
+        navigationOptions: {
+            title: 'Thanh toán',
+            headerTintColor: 'white',
+            headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
+            headerStyle: {backgroundColor:'#FF3364', paddingRight:10},
+        }
+    },
 });
 
 export const AccStack = StackNavigator({
@@ -86,6 +111,33 @@ export const AccStack = StackNavigator({
         screen: LogIn,
         navigationOptions: {
             title: 'Đăng Nhập',
+            headerTintColor: 'white',
+            headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
+            headerStyle: {backgroundColor:'#FF3364', paddingRight:10},
+        }
+    },
+    MyOrder: {
+        screen: Order,
+        navigationOptions: {
+            title: 'Thanh toán',
+            headerTintColor: 'white',
+            headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
+            headerStyle: {backgroundColor:'#FF3364', paddingRight:10},
+        }
+    },
+    MyBill: {
+        screen: BillDetail,
+        navigationOptions: {
+            title: 'Thông tin đơn hàng',
+            headerTintColor: 'white',
+            headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
+            headerStyle: {backgroundColor:'#FF3364', paddingRight:10},
+        }
+    },
+    MyBillDetail: {
+        screen: MyBillDetail,
+        navigationOptions: {
+            title: 'Chi tiết đơn hàng',
             headerTintColor: 'white',
             headerTitleStyle :{ color:'white', fontFamily: 'serif ',},
             headerStyle: {backgroundColor:'#FF3364', paddingRight:10},

@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import getCart from '../../API/getCart'
+import {newCartList} from "../../REDUX/ACTION/CartAction";
+import {connect} from 'react-redux';
 import {
     View,
     Text,
@@ -11,7 +14,15 @@ import {
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
 import LogoStore from 'daCosmetic/src/Image/logostore.png';
-export default class SplashScreen extends Component {
+class SplashScreen extends Component {
+    componentDidMount(){
+        getCart().then(value => {
+            if(value !== null){
+                this.props.newCartList(value)
+            }
+        })
+    }
+
     render(){
         const  {wrapper, imgStyle, txtStyle} = styles;
         return (
@@ -42,3 +53,8 @@ const styles = StyleSheet.create({
         fontWeight: '800',
     }
 });
+
+const mapSTP = (state) => ({
+    listCart : state.listCart
+});
+export default connect(mapSTP,{newCartList})(SplashScreen)

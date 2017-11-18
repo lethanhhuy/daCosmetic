@@ -6,12 +6,11 @@ import {
     StyleSheet,
     TextInput,
     Alert,
-    AsyncStorage
+    AsyncStorage,
+    Keyboard
 } from 'react-native';
 import Firebase from 'daCosmetic/src/API/Firebase';
-import global from 'daCosmetic/src/API/global';
-import saveToken from'daCosmetic/src/API/saveToken';
-var user_data;
+
 export default class SignIn extends Component {
     constructor(props) {
         super(props);
@@ -22,19 +21,23 @@ export default class SignIn extends Component {
     }
     onsignIn() {
         const {email, password} = this.state;
-
-        Firebase.auth().signInWithEmailAndPassword(email,password).then(function(user_data) {
+        Firebase.auth().signInWithEmailAndPassword(email,password).then((user_data) => {
             AsyncStorage.setItem('user_data', JSON.stringify(user_data));
-            console.log(user_data);
-            {(()=>{this.props.navigation.goBack()})()}
-            /*Alert.alert('Đăng Nhập Thành Công: '+ this.state.email, null, [
+
+            //console.log(user_data);
+            //{(()=>{this.props.navigation.GoBack()})()}
+            Alert.alert('Đăng Nhập Thành Công: '+ this.state.email, null, [
                     {
                         text: 'OK',
-                        onPress: ()=> {this.props.gotoBack(), global.onSignIn()}
+                        onPress: ()=> {this.props.GoBack(),Keyboard.dismiss()}
                     },
                 ],
                 { cancelable: false }
-            )*/
+            );
+            this.setState({
+                email:'',
+                password:'',
+            });
         }).catch(function(error) {
             if(error){
                 switch (error.code){
@@ -43,22 +46,15 @@ export default class SignIn extends Component {
                         break;
                     case'auth/wrong-password':
                         Alert.alert('Thông báo','Mật khẩu sai !')
+                        break;
+                    default : Alert.alert('Thông báo','Tên email không tồn tại hoặc không chính xác !')
                 }
-            }
-            else{
-                /*Alert.alert(
-                    'Thông Báo',
-                    'Đăng nhập thất bại:\nTài khoản hoặc mật khẩu không đúng !!', [
-                        { text: 'OK' },
-                    ],
-                    { cancelable: false });*/
             }
 
         });
     }
     render(){
         const { email, password } = this.state;
-        console.log(user_data);
         return (
             <View>
                 <TextInput
